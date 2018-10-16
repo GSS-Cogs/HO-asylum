@@ -20,7 +20,7 @@ pipeline {
                 }
             }
             steps {
-                sh "jupyter-nbconvert --output-dir=out --execute 'main.ipynb' --ExecutePreprocessor.timeout=300"
+                sh "jupyter-nbconvert --output-dir=out --execute 'main.ipynb' --ExecutePreprocessor.timeout=None"
             }
         }
         stage('Upload draftset') {
