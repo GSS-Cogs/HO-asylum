@@ -36,9 +36,7 @@ pipeline {
         }
         stage('Publish') {
             steps {
-                script {
-                    jobDraft.publish()
-                }
+                jobDraft.publish()
             }
         }
     }
