@@ -26,17 +26,21 @@ pipeline {
         }
         stage('Upload draftset') {
             steps {
-                jobDraft.replace()
-                uploadTidy(['out/as_01_q.csv'],'https://github.com/ONS-OpenData/ref_migration/raw/master/columns.csv','asylum_as_01')
-                uploadTidy(['out/as_04.csv'],'https://github.com/ONS-OpenData/ref_migration/raw/master/columns.csv','asylum_as_04')
-                uploadTidy(['out/as_16_q.csv'],'https://github.com/ONS-OpenData/ref_migration/raw/master/columns.csv','asylum_as_16_q')
-                uploadTidy(['out/as_19_q.csv'],'https://github.com/ONS-OpenData/ref_migration/raw/master/columns.csv','asylum_as_19_q')
-                uploadTidy(['out/as_22_q.csv'],'https://github.com/ONS-OpenData/ref_migration/raw/master/columns.csv','asylum_as_22_q')
+                script {
+                    jobDraft.replace()
+                    uploadTidy(['out/as_01_q.csv'],'https://github.com/ONS-OpenData/ref_migration/raw/master/columns.csv','asylum_as_01')
+                    uploadTidy(['out/as_04.csv'],'https://github.com/ONS-OpenData/ref_migration/raw/master/columns.csv','asylum_as_04')
+                    uploadTidy(['out/as_16_q.csv'],'https://github.com/ONS-OpenData/ref_migration/raw/master/columns.csv','asylum_as_16_q')
+                    uploadTidy(['out/as_19_q.csv'],'https://github.com/ONS-OpenData/ref_migration/raw/master/columns.csv','asylum_as_19_q')
+                    uploadTidy(['out/as_22_q.csv'],'https://github.com/ONS-OpenData/ref_migration/raw/master/columns.csv','asylum_as_22_q')
+                }
             }
         }
         stage('Publish') {
             steps {
-                jobDraft.publish()
+                script {
+                    jobDraft.publish()
+                }
             }
         }
     }
