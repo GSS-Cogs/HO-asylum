@@ -1,0 +1,67 @@
+{
+  "@context": [
+    "http://www.w3.org/ns/csvw",
+    {
+      "@language": "en"
+    }
+  ],
+  "tables": [
+    {
+      "url": "https://ons-opendata.github.io/ref_migration/codelists/section-95-support.csv",
+      "tableSchema": "https://ons-opendata.github.io/ref_common/codelist-schema.json"
+    },
+    {
+      "url": "out/as_16_q.csv",
+      "tableSchema": {
+        "columns": [
+          {
+            "titles": "Period",
+            "required": true,
+            "name": "period"
+          },
+          {
+            "titles": "Geography",
+            "required": true,
+            "name": "geography"
+          },
+          {
+            "titles": "Section 95 Support",
+            "required": true,
+            "name": "section_support"
+          },
+          {
+            "titles": "Measure Type",
+            "required": true,
+            "name": "measure_type"
+          },
+          {
+            "titles": "Value",
+            "required": true,
+            "name": "value"
+          },
+          {
+            "titles": "Unit",
+            "required": true,
+            "name": "unit"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "columnReference": "section_support",
+            "reference": {
+              "resource": "https://ons-opendata.github.io/ref_migration/codelists/section-95-support.csv",
+              "columnReference": "notation"
+            }
+          }
+        ],
+        "primaryKey": [
+          "period",
+          "geography",
+          "section_support",
+          "measure_type",
+          "unit"
+        ]
+      }
+    }
+  ]
+}
