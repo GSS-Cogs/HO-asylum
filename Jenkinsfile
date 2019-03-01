@@ -20,19 +20,56 @@ pipeline {
                 }
             }
             steps {
-                sh "jupyter-nbconvert --to python --stdout 'create_dataset_metadata.ipynb' | ipython"
-                sh "jupyter-nbconvert --output-dir=out --execute 'main.ipynb' --ExecutePreprocessor.interrupt_on_timeout=True --ExecutePreprocessor.timeout=600"
+                script {
+                    ansiColor('xterm') {
+                        sh "jupyter-nbconvert --output-dir=out --ExecutePreprocessor.timeout=None --execute 'Home Office, Immigration Statistics October to December 2016, Asylum table as 01 q.ipynb'"
+                        sh "jupyter-nbconvert --output-dir=out --ExecutePreprocessor.timeout=None --execute 'as_04 Asylum applications from main applicants and dependants.ipynb'"
+                        sh "jupyter-nbconvert --output-dir=out --ExecutePreprocessor.timeout=None --execute 'Asylum seekers receiving support(As_16_q).ipynb'"
+                        sh "jupyter-nbconvert --output-dir=out --ExecutePreprocessor.timeout=None --execute 'Refugees resettled(As_19_q).ipynb'"
+                        sh "jupyter-nbconvert --output-dir=out --ExecutePreprocessor.timeout=None --execute 'Arrivals under Dublin regulations(As_22_q).ipynb'"
+                    }
+                }
+            }
+        }
+        stage('Test') {
+            agent {
+                docker {
+                    image 'cloudfluff/csvlint'
+                    reuseNode true
+                }
+            }
+            steps {
+                script {
+                    ansiColor('xterm') {
+                        sh "csvlint -s schema.json"
+                    }
+                }
             }
         }
         stage('Upload draftset') {
             steps {
                 script {
                     jobDraft.replace()
-                    uploadTidy(['out/as_01_q.csv'],'https://github.com/ONS-OpenData/ref_migration/raw/master/columns.csv','asylum_as_01')
-                    uploadTidy(['out/as_04.csv'],'https://github.com/ONS-OpenData/ref_migration/raw/master/columns.csv','asylum_as_04')
-                    uploadTidy(['out/as_16_q.csv'],'https://github.com/ONS-OpenData/ref_migration/raw/master/columns.csv','asylum_as_16_q')
-                    uploadTidy(['out/as_19_q.csv'],'https://github.com/ONS-OpenData/ref_migration/raw/master/columns.csv','asylum_as_19_q')
-                    uploadTidy(['out/as_22_q.csv'],'https://github.com/ONS-OpenData/ref_migration/raw/master/columns.csv','asylum_as_22_q')
+                    uploadTidy(['out/as_01_q.csv'],
+                               'https://github.com/ONS-OpenData/ref_migration/raw/master/columns.csv',
+                               'migration/ho-asylum/as_01',
+                               'out/as_01_q.csv-metadata.trig')
+                    uploadTidy(['out/as_04.csv'],
+                               'https://github.com/ONS-OpenData/ref_migration/raw/master/columns.csv',
+                               'migration/ho-asylum/as_04',
+                               'out/as_04.csv-metadata.trig')
+                    uploadTidy(['out/as_16_q.csv'],
+                               'https://github.com/ONS-OpenData/ref_migration/raw/master/columns.csv',
+                               'migration/ho-asylum/as_16_q',
+                               'out/as_16_q.csv-metadata.trig')
+                    uploadTidy(['out/as_19_q.csv'],
+                               'https://github.com/ONS-OpenData/ref_migration/raw/master/columns.csv',
+                               'migration/ho-asylum/as_19_q',
+                               'out/as_19_q.csv-metadata.trig')
+                    uploadTidy(['out/as_22_q.csv'],
+                               'https://github.com/ONS-OpenData/ref_migration/raw/master/columns.csv',
+                               'migration/ho-asylum/as_22_q',
+                               'out/as_22_q.csv-metadata.trig')
                 }
             }
         }
