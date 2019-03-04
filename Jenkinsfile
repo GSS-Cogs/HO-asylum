@@ -41,11 +41,11 @@ pipeline {
             steps {
                 script {
                     ansiColor('xterm') {
-                        sh "csvlint -s as_01_q.csv-metadata.json"
-                        sh "csvlint -s as_04.csv-metadata.json"
-                        sh "csvlint -s as_16_q.csv-metadata.json"
-                        sh "csvlint -s as_19_q.csv-metadata.json"
-                        sh "csvlint -s as_22_q.csv-metadata.json"
+                        sh "csvlint -s out/as_01_q.csv-schema.json"
+                        sh "csvlint -s out/as_04.csv-schema.json"
+                        sh "csvlint -s out/as_16_q.csv-schema.json"
+                        sh "csvlint -s out/as_19_q.csv-schema.json"
+                        sh "csvlint -s out/as_22_q.csv-schema.json"
                     }
                 }
             }
