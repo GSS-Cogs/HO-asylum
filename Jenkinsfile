@@ -56,7 +56,7 @@ pipeline {
                     jobDraft.replace()
                     uploadTidy(['out/as_01_q.csv'],
                                'https://github.com/ONS-OpenData/ref_migration/raw/master/columns.csv',
-                               'migration/ho-asylum/as_01',
+                               'migration/ho-asylum/as_01_q',
                                'out/as_01_q.csv-metadata.trig')
                     uploadTidy(['out/as_04.csv'],
                                'https://github.com/ONS-OpenData/ref_migration/raw/master/columns.csv',
