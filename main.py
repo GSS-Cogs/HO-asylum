@@ -6,4 +6,4 @@ for i in py_files:
     file = "'" + i + "'"
     if 'main' in file:
         pass
-    %run $file
+    %run file
