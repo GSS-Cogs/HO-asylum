@@ -113,6 +113,11 @@ Final_table.rename(columns={'Local Authority':'Geography'}, inplace=True)
 
 Final_table = Final_table[['Period','Geography','Section 95 Support','Measure Type','Value','Unit']]
 
+# Remove 3 and 4 digit geography codes are they are obsolete after 2015 and not on the Geography website causing the pipeline to fail
+# Also removed 'other-and-unkown for smae reason'
+Final_table = Final_table[(Final_table['Geography'].str.len() > 5) & (Final_table['Geography'] != "other-and-unknown")]
+#Final_table["Geography"].unique()
+
 # +
 destinationFolder = Path('out')
 destinationFolder.mkdir(exist_ok=True, parents=True)
